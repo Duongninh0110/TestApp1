@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.dashboard');
 });
+
+Route::match(['get', 'post'], 'admin', 'AdminController@login');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
