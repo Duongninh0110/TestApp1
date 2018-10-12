@@ -89,27 +89,25 @@ $(document).ready(function(){
     $("#add_product").validate({
 		rules:{
 			product_name:{
-				required:true
+				required:true,
+				maxlength:100
 			},
 			category_id:{
 				required:true
 				
-			},
+			},			
 			
-			product_code:{
-				required:true,
-				
-			},
-
-			product_color:{
-				required:true,
-				
-			},
-
 			price:{
 				required:true,
-				number:true
+				number:true,
+				maxlength:10
 				
+			},
+
+			description:{
+				required:true,
+				maxlength:3000
+
 			},
 
 			image:{
@@ -137,31 +135,26 @@ $(document).ready(function(){
     $("#edit_product").validate({
 		rules:{
 			product_name:{
-				required:true
+				required:true,
+				maxlength:100
 			},
 			category_id:{
-				required:true
+				required:true,
 				
-			},
+			},			
 			
-			product_code:{
-				required:true,
-				
-			},
-
-			product_color:{
-				required:true,
-				
-			},
-
 			price:{
 				required:true,
-				number:true
+				number:true,
+				maxlength:10
 				
+			},
+
+			description:{
+				required:true,
+				maxlength:3000
+
 			}
-
-
-
 
 		},
 		errorClass: "help-inline",
