@@ -41,12 +41,12 @@
         @csrf
         <div class="form-group">
           <label for="name">User Name</label>
-          <input id="name" name="name" type="text" class="form-control" placeholder="Name"/>
+          <input id="name" name="name" type="text" class="form-control" placeholder="Name" value="{{ old('name') }}"/>
         </div>
 
         <div class="form-group">
           <label for="email">Email Address</label>
-          <input id="email" name="email" type="email" class="form-control" placeholder="Email Address"/>
+          <input id="email" name="email" type="email" class="form-control" placeholder="Email Address" value="{{ old('email') }}"/>
         </div>
 
         <div class="form-group">

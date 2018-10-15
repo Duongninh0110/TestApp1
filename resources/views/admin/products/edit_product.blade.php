@@ -48,7 +48,7 @@
         <div class="form-group">
           <label class="control-label">Giá</label>
           <div class="controls">
-            <input type="text" name="price" id="price" value="{{$productDetails->price}}" class="form-control mb-3"/>
+            <input type="number" name="price" id="price" value="{{$productDetails->price}}" class="form-control mb-3"/>
           </div>
         </div>
 

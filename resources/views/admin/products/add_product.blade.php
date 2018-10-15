@@ -45,7 +45,7 @@
 
         <div class="form-group">
           <label class="">Giá</label>          
-          <input type="number" name="price" id="price" class="form-control " />
+          <input type="number" name="price" id="price" class="form-control" value="{{ old('price') }}"/>
         </div>
 
         <div class="form-group">
@@ -57,7 +57,7 @@
 
         <div class="form-group">
           <label class="">Giới Thiệu</label>
-          <textarea type="text" name="description" id="description" class="form-control " rows="10"></textarea>
+          <textarea type="text" name="description" id="description" class="form-control " rows="10" value="{{ old('description') }}"></textarea>
         </div>
 
         <div class="form-actions">

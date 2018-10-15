@@ -31,6 +31,9 @@
           @else
           <li class="nav-item"><a href="{{url('user-logout')}}" class="nav-link">Logout</a></li>
           @endif
+          @if(!empty(Session('admin')))
+          <li class="nav-item"><a href="{{url('/admin/dashboard')}}" class="nav-link">Admin</a></li>
+          @endif 
         </ul>
       </div>
     </nav>
