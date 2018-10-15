@@ -33,10 +33,11 @@ class ProductController extends Controller
                 if ($image_tmp->isvalid()) {
                     $extension = $image_tmp->getClientOriginalExtension();
                     $filename = time().'.'.$extension;
-                    $image_path = 'images/backend_images/products/'.$filename;
+                    $image_path = 'images/backend_images/products/';
                     // dd($image_path);
                     //resize images
-                    Image::make($image_tmp)->resize(285, 405)->save($image_path);
+                    // Image::make($image_tmp)->resize(285, 405)->save($image_path);
+                    $image_tmp->move($image_path, $filename);
                     //store images
                     $product->photo = $filename;
                 }
@@ -76,8 +77,9 @@ class ProductController extends Controller
                 if ($image_tmp->isvalid()) {
                     $extension = $image_tmp->getClientOriginalExtension($image_tmp);
                     $filename = time().".".$extension;
-                    $image_path = "images/backend_images/products/".$filename;
-                    Image::make($image_tmp)->resize(285, 405)->save($image_path);
+                    $image_path = "images/backend_images/products/";
+                    // Image::make($image_tmp)->resize(285, 405)->save($image_path);
+                    $image_tmp->move($image_path, $filename);
                     $productDetails->photo =  $filename;
                 }
             }

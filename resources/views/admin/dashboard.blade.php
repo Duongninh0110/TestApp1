@@ -25,7 +25,7 @@
   <div class="row mt-3">    
     @foreach ($products as $product)
         <div class="col-md-4 col-lg-4 text-center">
-            <a href="{{url('/product/'.$product->id)}}"><img src="{{asset('images/backend_images/products/'.$product->photo)}}" alt=""></a>
+            <a href="{{url('/product/'.$product->id)}}"><img style="width: 285px; height: 405px;" src="{{asset('images/backend_images/products/'.$product->photo)}}" alt=""></a>
             <h2>VND {{number_format($product->price)}}</h2>
             <p>{{$product->name}}</p>
 

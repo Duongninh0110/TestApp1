@@ -40,12 +40,12 @@
         @csrf
         <div class="form-group">
           <label class="">Tên Sách</label>
-          <input type="text" name="product_name" class="form-control " id="product_name" />         
+          <input type="text" name="product_name" class="form-control " id="product_name" value="{{ old('product_name') }}" />         
         </div>
 
         <div class="form-group">
           <label class="">Giá</label>          
-          <input type="text" name="price" id="price" class="form-control " />          
+          <input type="number" name="price" id="price" class="form-control " />
         </div>
 
         <div class="form-group">

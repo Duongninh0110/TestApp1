@@ -10,7 +10,7 @@ class IndexController extends Controller
 {
     public function index()
     {        
-        $products = Product::where(['status'=>1])->get();
+        $products = Product::get();
         return view('index')->with('products', $products);
     }
 }

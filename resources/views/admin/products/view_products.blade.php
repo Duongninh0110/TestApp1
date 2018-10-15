@@ -36,7 +36,7 @@
           </div>
       @endif
       <h2>Kho sách</h2>
-      <table class="table">
+      <table class="table" style="word-break: break-all;">
         <thead>
           <tr>
             <th>Product_ID</th>

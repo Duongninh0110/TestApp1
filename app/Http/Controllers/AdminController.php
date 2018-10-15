@@ -12,7 +12,7 @@ class AdminController extends Controller
     public function dashboard()
     {
 
-        $products = Product::where(['status'=>1])->get();
+        $products = Product::get();
         return view('admin.dashboard')->with('products', $products);
     }
 }
