@@ -1,45 +1,39 @@
-@extends('layout.admin_layout.admin_design')
 
-@section('content')
+@extends ('layouts.backendLayout')
 
-<!--main-container-part-->
-<div id="content">
-<!--breadcrumbs-->
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
-  </div>
-<!--End-breadcrumbs-->
+@section ('content')
 
 <div class="container">
-    <div class="row">  
-        <div class="features_items"><!--features_items-->
-          <h2 class="title text-center">Kho Sách</h2>
+  <!-- main content area -->
+  <a href=""><span><i class="fa fa-home" aria-hidden="true"></i></span>Kho sách</a>
+  @if (session('flash_message_error'))
 
-          @foreach ($products as $product)
-          <div class="col-sm-4">
-            <div class="product-image-wrapper">
-              <div class="single-products">
-                  <div class="productinfo text-center">
-                    <a href="{{url('/product/'.$product->id)}}"><img src="{{asset('images/backend_images/products/'.$product->photo)}}" alt="" /></a>
-                    
-                    <h2>VND {{number_format($product->price)}}</h2>
-                    <p>{{$product->name}}</p>
-                    
-                  </div>
-                  
-              </div>              
-            </div>
-          </div>
-          @endforeach 
-          
-        </div><!--features_items--> 
+    <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{!!session('flash_message_error')!!}</strong>
+    </div>                     
+  @endif
+
+
+  @if (session('flash_message_success'))
+
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{!!session('flash_message_success')!!}</strong>
     </div>
-  </div>
+  @endif
+  <div class="row mt-3">    
+    @foreach ($products as $product)
+        <div class="col-md-4 col-lg-4 text-center">
+            <a href="{{url('/product/'.$product->id)}}"><img src="{{asset('images/backend_images/products/'.$product->photo)}}" alt=""></a>
+            <h2>VND {{number_format($product->price)}}</h2>
+            <p>{{$product->name}}</p>
 
+        </div>
+    @endforeach
+  </div>
 </div>
 
-<!--end-main-container-part-->
 
 
-
-@endsection 
+@endsection

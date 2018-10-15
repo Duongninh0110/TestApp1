@@ -1,80 +1,31 @@
-@extends ('layout.front_layout.front_design')
+
+@extends ('layouts.frontendLayout')
+
 @section ('content')
 
-<section>
-		<div class="container">
-			<div class="row">
+<div class="container">
+  <!-- main content area -->
+  <a href=""><span><i class="fa fa-book" aria-hidden="true"></i></span>{{$productDetails->name}}</a>
+  <div class="row mt-3 justify-content-center">
+    <div class="col-md-4">
+      <img src="{{asset('images/backend_images/products/'.$productDetails->photo)}}" alt="">
+      
+    </div>
 
-				@if (session('flash_message_error'))
+    <div class="col-md-4 ">
+      <h2>{{$productDetails->name}}</h2>                
+      <span>
+        <span>VND {{number_format($productDetails->price)}}</span>            
+        
+      </span>
+      <h3>Giới thiệu:</h3>
+      <p>{{$productDetails->description}}</p>
+      
+    </div>
 
-			        <div class="alert alert-danger alert-block">
-			            <button type="button" class="close" data-dismiss="alert">×</button> 
-			            <strong>{!!session('flash_message_error')!!}</strong>
-			        </div>
-
-			           
-			    @endif  
+  </div>
+</div>
 
 
-			    @if (session('flash_message_success'))
-
-			      <div class="alert alert-success alert-block">
-			          <button type="button" class="close" data-dismiss="alert">×</button> 
-			          <strong>{!!session('flash_message_success')!!}</strong>
-			      </div>
-			    @endif 
-
-				<div class="col-sm-3">
-					@include ('layout.front_layout.front_sidebar')
-				</div>
-				
-				<div class="col-sm-9 padding-right">
-					<div class="product-details"><!--product-details-->
-						<div class="col-sm-5">
-							<div class="view-product">
-
-								<img src="{{asset('images/backend_images/products/'.$productDetails->photo)}}" alt="">
-							</div>
-							
-
-						</div>
-						<div class="col-sm-7">
-							<div class="product-information"><!--/product-information-->
-								
-								<h2>{{$productDetails->name}}</h2>								
-								<span>
-									<span>VND {{number_format($productDetails->price)}}</span>						
-									
-								</span>
-								
-							</div><!--/product-information-->
-						</div>
-					</div><!--/product-details-->
-					
-					<div class="category-tab shop-details-tab"><!--category-tab-->
-						<div class="col-sm-12">
-							<ul class="nav nav-tabs">
-								<li><a href="#description" data-toggle="tab">Giới Thiệu</a></li>
-								
-								
-							</ul>
-						</div>
-						<div class="tab-content">
-							<div class="tab-pane fade active in" id="description" >
-								<div class="col-sm-12">
-
-									<p>{{$productDetails->description}}</p>
-
-								</div>
-							</div>
-						</div>
-					</div><!--/category-tab-->
-					
-					
-					
-				</div>
-			</div>
-		</div>
-	</section>
 
 @endsection

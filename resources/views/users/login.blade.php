@@ -36,7 +36,7 @@
           </div>
       @endif
       <h3>Login to your account</h3>
-      <form id="loginForm" name="loginForm" action="{{url('admin')}}" method="post">
+      <form id="loginForm" name="loginForm" action="{{url('/user-login')}}" method="post">
         @csrf
         <div class="form-group">
           <label for="email">Email Address</label>

@@ -13,29 +13,18 @@
 
 
 
-Route::get('/', 'IndexController@index');
 
-Route::get('product/{id}','ProductController@productDetails');
 
-Route::get('products/{url}', 'ProductController@productList');
 
-Route::match(['get', 'post'], 'admin', 'AdminController@login');
+
+
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['admin']], function () {
     Route::get('admin/dashboard', 'AdminController@dashboard');
-    Route::get('logout', 'AdminController@logout');
-
-    //Category routes
-
-    Route::match(['get', 'post'], 'admin/add-category', 'CategoryController@addCategory');
-    Route::get('admin/view-categories', 'CategoryController@viewCategories');
-    Route::get('admin/delete-category/{id}', 'CategoryController@deleteCategory');
-    Route::match(['get','post'], 'admin/edit-category/{id}', 'CategoryController@editCategory');
-
 
     // Product routes
 
@@ -45,7 +34,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('admin/delete-product/{id}', 'ProductController@deleteProduct');
 });
 
-Route::get('login-register', 'UserController@registerAndLogin');
+Route::group(['middleware'=>['login']], function() {
+    Route::get('/', 'IndexController@index');
+    Route::get('product/{id}','ProductController@productDetails');
+
+});
+
+Route::get('user-login', 'UserController@userLogin');
+Route::get('user-register', 'UserController@userRegister');
 Route::post('/user-register','UserController@register');
 Route::post('/user-login', 'UserController@login' );
 Route::get('user-logout', 'UserController@logout');

@@ -10,9 +10,14 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function registerAndLogin()
+    public function userRegister()
     {
-        return view('users.login_register');
+        return view('users.register');
+    }
+
+    public function userLogin()
+    {
+        return view('users.login');
     }
 
     public function register(Request $request)
@@ -52,20 +57,30 @@ class UserController extends Controller
     public function login(Request $request)
     {
         if ($request->ismethod('post')) {
+
+            $validatedData = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+            ]);
+
             $data = $request->all();
+            if (Auth::attempt(['email'=>$data['email'], 'password' => $data['password'], 'admin' =>'1'])) {
+                Session::put('admin', $data['email']);
+                return redirect('admin/dashboard');
+            }
             if (auth::attempt(['email'=> $data['email'],'password'=>$data['password']])) {
                 Session::put('frontend', $data['email']);
                 return redirect('/');
             } else {
-                return rediect('/login-register')->with('flash_message_error', 'Email or password wrong');
+                return redirect('/user-login')->with('flash_message_error', 'Email or password wrong');
             }
         }
     }
 
-    public function logout()
-    {
-        Session::forget('frontend');
+    public function logout(Request $request)
+    {   
         auth::logout();
-        return redirect('/login-register');
+        $request->session()->flush();
+        return redirect('/user-login');
     }
 }

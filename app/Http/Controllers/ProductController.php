@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Category;
 use Illuminate\Support\Facades\Input;
 use App\Product;
 use Image;
@@ -24,7 +23,6 @@ class ProductController extends Controller
             $data = $request->all();
             
             $product = new Product;
-            $product->category_id = $data['category_id'];
             $product->name = $data['product_name'];
             $product->description = $data['description'];
             $product->price = $data['price'];
@@ -43,29 +41,13 @@ class ProductController extends Controller
                     $product->photo = $filename;
                 }
             }
-            if (empty($data['status'])) {
-                $status = 0;
-            } else {
-                $status = 1;
-            }
-
-            $product->status = $status;
             $product->save();
 
             return redirect('admin/view-products')
                 ->with('flash_message_success', 'The product has been added successfully');
         }
-
-        $categories = Category::where(['parent_id'=>0])->get();
-        $categories_dropdown = "<option selected disabled>Select</option>";
-        foreach ($categories as $cat) {
-            $categories_dropdown .= "<option value=".$cat->id.">".$cat->name."</option>";
-            $subcategories = Category::where(['parent_id'=>$cat['id']])->get();
-            foreach ($subcategories as $subcat) {
-                $categories_dropdown .= "<option value=".$subcat->id.">--".$subcat->name."</option>";
-            }
-        }
-        return view('admin.products.add_product')->with('categories_dropdown', $categories_dropdown);
+        
+        return view('admin.products.add_product');
     }
 
     public function viewProducts()
@@ -85,7 +67,6 @@ class ProductController extends Controller
             'image' => 'mimes:jpeg,gif,png|max:10240'
             ]);
             $data = $request->all();
-            $productDetails->category_id = $data['category_id'];
             $productDetails->name = $data['product_name'];
             $productDetails->description = $data['description'];
             $productDetails->price = $data['price'];
@@ -100,40 +81,13 @@ class ProductController extends Controller
                     $productDetails->photo =  $filename;
                 }
             }
-            if (empty($data['status'])) {
-                $status = 0;
-            } else {
-                $status = 1;
-            }
 
-            $productDetails->status = $status;
             $productDetails->save();
             return redirect('admin/view-products')
                 ->with('flash_message_success', 'The product has been edited successfully');
         }
-
-        $categories = Category::where(['parent_id'=>0])->get();
-        $categories_dropdown = "<option selected disabled>Select</option>";
-        foreach ($categories as $cat) {
-            if ($cat->id == $productDetails->category_id) {
-                $select='selected';
-            } else {
-                $select = '';
-            }
-
-            $categories_dropdown .= "<option value='".$cat->id."'". $select.">".$cat->name."</option>";
-            $subcategories = Category::where(['parent_id'=>$cat['id']])->get();
-            foreach ($subcategories as $subcat) {
-                if ($subcat->id == $productDetails->category_id) {
-                    $select='selected';
-                } else {
-                    $select = '';
-                }
-                $categories_dropdown .= "<option value='".$subcat->id."'". $select.">--".$subcat->name."</option>";
-            }
-        }
-        return view('admin.products.edit_product')->with('productDetails', $productDetails)
-            ->with('categories_dropdown', $categories_dropdown);
+        
+        return view('admin.products.edit_product')->with('productDetails', $productDetails);
     }
 
     public function deleteProduct($id)
@@ -144,32 +98,8 @@ class ProductController extends Controller
     }
     public function productDetails($id)
     {
-        $allCategories=Category::with('categories')->where(['parent_id'=>'0', 'status'=>1])->get();
+        
         $productDetails = Product::find($id);
-        return view('products.details')->with('productDetails', $productDetails)->with('allCategories', $allCategories);
-    }
-    public function productList($url = null)
-    {
-        $countCategories=Category::where(['url'=>$url])->count();
-        // echo $countCategories; die;
-        if ($countCategories==0) {
-            abort('404');
-        }
-        $allCategories=Category::with('categories')->where(['parent_id'=>'0'])->get();
-        $categoryDetails = Category::where('url', $url)->first();
-        $categoryDetails = json_decode(json_encode($categoryDetails));
-        if ($categoryDetails->parent_id==0) {
-            $subCategories=Category::where(['parent_id'=> $categoryDetails->id])->get();
-            $subcat_ids = [];
-            $subcat_ids[] = $categoryDetails->id;
-            foreach ($subCategories as $subcat) {
-                $subcat_ids[] =$subcat->id;
-            }
-            $products = Product::whereIn('category_id', $subcat_ids)->where(['status'=>1])->get();
-        } else {
-            $products = Product::where(['category_id'=> $categoryDetails->id])->where(['status'=>1])->get();
-        }
-        return view('products.listing')->with('categoryDetails', $categoryDetails)
-            ->with('products', $products)->with('allCategories', $allCategories);
+        return view('products.details')->with('productDetails', $productDetails);
     }
 }
